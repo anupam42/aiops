@@ -15,8 +15,9 @@
     tableStore = createTableStore($situations);
   }
   
-  $: filteredData = tableStore.getFilteredData();
-  $: paginatedData = tableStore.getPaginatedData(filteredData);
+  // Ensure reactive updates when the table store changes
+  $: filteredData = ($tableStore, tableStore.getFilteredData());
+  $: paginatedData = ($tableStore, tableStore.getPaginatedData(filteredData));
   
   function toggleSort(column: string) {
     tableStore.toggleSort(column);
